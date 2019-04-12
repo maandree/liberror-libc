@@ -1,0 +1,2 @@
+This library provide wrappers for most standard C library
+functions that can fail providing liberror errors.
