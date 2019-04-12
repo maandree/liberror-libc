@@ -54,18 +54,18 @@ liberror-libc.$(LIBEXT): $(LOBJ)
 install: liberror-libc.a liberror-libc.$(LIBEXT)
 	mkdir -p -- "$(DESTDIR)$(PREFIX)/lib"
 	mkdir -p -- "$(DESTDIR)$(PREFIX)/include"
-	mkdir -p -- "$(DESTDIR)$(PREFIX)/licenses/liberror-libc"
+	mkdir -p -- "$(DESTDIR)$(PREFIX)/share/licenses/liberror-libc"
 	cp -- liberror-libc.a "$(DESTDIR)$(PREFIX)/lib"
 	cp -- liberror-libc.$(LIBEXT) "$(DESTDIR)$(PREFIX)/lib/liberror-libc.$(LIBMINOREXT)"
 	ln -sf -- liberror-libc.$(LIBMINOREXT) "$(DESTDIR)$(PREFIX)/lib/liberror-libc.$(LIBMAJOREXT)"
 	ln -sf -- liberror-libc.$(LIBMINOREXT) "$(DESTDIR)$(PREFIX)/lib/liberror-libc.$(LIBEXT)"
 	cp -- liberror-libc.h "$(DESTDIR)$(PREFIX)/include"
-	cp -- LICENSE "$(DESTDIR)$(PREFIX)/licenses/liberror-libc"
+	cp -- LICENSE "$(DESTDIR)$(PREFIX)/share/licenses/liberror-libc"
 
 uninstall:
 	-rm -f -- "$(DESTDIR)$(PREFIX)/lib/liberror-libc."*
 	-rm -f -- "$(DESTDIR)$(PREFIX)/include/liberror-libc.h"
-	-rm -rf -- "$(DESTDIR)$(PREFIX)/licenses/liberror-libc"
+	-rm -rf -- "$(DESTDIR)$(PREFIX)/share/licenses/liberror-libc"
 
 clean:
 	-rm -f -- *.o *.lo *.a *.so *.so.* *.su *.test
