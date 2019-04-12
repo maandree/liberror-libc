@@ -3,7 +3,7 @@
 
 
 int
-liberror_shutdown(int fd, int how)
+liberror_shutdown(int fd, int how, const char *fname)
 {
 	const char *desc;
 	if (!shutdown(fd, how))
@@ -28,6 +28,6 @@ liberror_shutdown(int fd, int how)
 		desc = "";
 		break;
 	}
-	liberror_set_error_errno(desc, "shutdown", errno);
+	liberror_libc_set_error_one_file(desc, "shutdown", "Socket file", fd, fname);
 	return -1;
 }

@@ -15,6 +15,7 @@ LIB_VERSION = $(LIB_MAJOR).$(LIB_MINOR)
 
 HDR =\
 	liberror-libc.h\
+	liberror.h\
 	internal.h
 
 OBJ =\
@@ -24,6 +25,7 @@ OBJ =\
 	llabs.o\
 	pipe.o\
 	putenv.o\
+	set_error_one_file.o\
 	setenv.o\
 	shutdown.o\
 	unsetenv.o

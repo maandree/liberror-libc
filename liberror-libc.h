@@ -12,7 +12,7 @@ long long int liberror_llabs(long long int);
 int liberror_pipe(int[2]);
 int liberror_putenv(char *);
 int liberror_setenv(const char *, const char *, int);
-int liberror_shutdown(int, int);
+int liberror_shutdown(int, int, const char *);
 int liberror_unsetenv(const char *);
 
 

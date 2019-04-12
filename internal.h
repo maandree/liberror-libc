@@ -1,5 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 #include "liberror-libc.h"
+#include "liberror.h"
 
 #include <sys/socket.h>
 #include <errno.h>
@@ -9,5 +10,13 @@
 #include <unistd.h>
 
 
-void liberror_set_error(const char[256], const char[64], const char[64], long long int);
-void liberror_set_error_errno(const char[256], const char[64], int);
+#if defined(__GNUC__)
+# define GCC_ATTRIBUTES(...) __attribute__((__VA_ARGS__))
+#else
+# define GCC_ATTRIBUTES(...)
+#endif
+
+#define HIDDEN GCC_ATTRIBUTES(__visibility__("hidden"))
+
+
+HIDDEN void liberror_libc_set_error_one_file(const char[256], const char[64], const char *, int, const char *);
