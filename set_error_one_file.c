@@ -7,6 +7,7 @@ liberror_libc_set_error_one_file(const char desc[256], const char source[64], co
 {
 	struct liberror_error *error;
 	int saved_errno = errno;
+	liberror_save_backtrace(NULL);
 	liberror_set_error_errno(desc, source, saved_errno);
 	error = liberror_get_error();
 	error->details_type = LIBERROR_DETAILS_ONE_FILE;

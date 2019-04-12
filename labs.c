@@ -10,6 +10,7 @@ liberror_labs(long int i)
 #else
 	if (i != LONG_MIN)
 		return labs(i);
+	liberror_save_backtrace(NULL);
 	liberror_set_error_errno("The absolute value of largest negative integer "
 	                         "cannot be represented as a signed integer",
 	                         "labs", EOVERFLOW);

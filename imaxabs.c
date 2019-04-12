@@ -10,6 +10,7 @@ liberror_imaxabs(intmax_t i)
 #else
 	if (i != INTMAX_MIN)
 		return imaxabs(i);
+	liberror_save_backtrace(NULL);
 	liberror_set_error_errno("The absolute value of largest negative integer "
 	                         "cannot be represented as a signed integer",
 	                         "imaxabs", EOVERFLOW);

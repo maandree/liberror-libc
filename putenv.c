@@ -22,6 +22,7 @@ liberror_putenv(char *string)
 		return 0;
 	}
 error:
+	liberror_save_backtrace(NULL);
 	liberror_set_error_errno(desc, "putenv", errno);
 	return -1;
 }

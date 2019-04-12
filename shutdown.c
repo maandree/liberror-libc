@@ -28,6 +28,7 @@ liberror_shutdown(int fd, int how, const char *fname)
 		desc = "";
 		break;
 	}
+	liberror_save_backtrace(NULL);
 	liberror_libc_set_error_one_file(desc, "shutdown", "Socket file", fd, fname);
 	return -1;
 }

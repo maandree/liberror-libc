@@ -18,6 +18,7 @@ liberror_unsetenv(const char *name)
 		desc = "Environment variable name contains the '=' character";
 	}
 error:
+	liberror_save_backtrace(NULL);
 	liberror_set_error_errno(desc, "setenv", errno);
 	return -1;
 }

@@ -27,6 +27,7 @@ liberror_pipe(int fds[2])
 		break;
 	}
 error:
+	liberror_save_backtrace(NULL);
 	liberror_set_error_errno(desc, "pipe", errno);
 	return -1;
 }
