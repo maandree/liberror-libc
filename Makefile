@@ -15,7 +15,6 @@ LIB_VERSION = $(LIB_MAJOR).$(LIB_MINOR)
 
 HDR =\
 	liberror-libc.h\
-	liberror.h\
 	internal.h
 
 OBJ =\
