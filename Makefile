@@ -19,14 +19,22 @@ HDR =\
 
 OBJ =\
 	abs.o\
+	calloc.o\
+	chdir.o\
 	imaxabs.o\
 	labs.o\
 	llabs.o\
+	malloc.o\
 	pipe.o\
 	putenv.o\
+	raise.o\
+	realloc.o\
+	recv.o\
+	send.o\
 	set_error_one_file.o\
 	setenv.o\
 	shutdown.o\
+	sockatmark.o\
 	unsetenv.o
 
 LOBJ = $(OBJ:.o=.lo)

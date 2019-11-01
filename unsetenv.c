@@ -2,23 +2,26 @@
 #include "internal.h"
 
 
+void
+liberror_unsetenv_failed(const char *name)
+{
+	const char *desc = "";
+	if (!name)
+		desc = "Environment variable name is NULL";
+	else if (!*name)
+		desc = "Environment variable name is the empty string";
+	else if (errno == EINVAL)
+		desc = "Environment variable name contains the '=' character";
+	liberror_set_error_errno(desc, "setenv", errno);
+}
+
+
 int
 liberror_unsetenv(const char *name)
 {
-	const char *desc = "";
-	if (!name) {
-		errno = EINVAL;
-		desc = "Environment variable name is NULL";
-		goto error;
-	} else if (!unsetenv(name)) {
+	if (!unsetenv(name))
 		return 0;
-	} else if (!*name) {
-		desc = "Environment variable name is the empty string";
-	} else if (errno == EINVAL) {
-		desc = "Environment variable name contains the '=' character";
-	}
-error:
 	liberror_save_backtrace(NULL);
-	liberror_set_error_errno(desc, "setenv", errno);
+	liberror_unsetenv_failed(name);
 	return -1;
 }

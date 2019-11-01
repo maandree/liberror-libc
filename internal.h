@@ -1,9 +1,12 @@
 /* See LICENSE file for copyright and license details. */
 #include "liberror-libc.h"
 
+#include <netinet/in.h>
 #include <sys/socket.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <inttypes.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>

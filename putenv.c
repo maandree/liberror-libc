@@ -2,6 +2,26 @@
 #include "internal.h"
 
 
+void
+liberror_putenv_failed(char *string)
+{
+	const char *desc;
+	if (!string) {
+		errno = EINVAL;
+		desc = "Environment string is NULL";
+	} else if (*string == '=') {
+		errno = EINVAL;
+		desc = "Environment variable name is the empty string";
+	} else if (!strchr(string, '=')) {
+		errno = EINVAL;
+		desc = "Environment does not contain an '=' symbol";
+	} else {
+		desc = "";
+	}
+	liberror_set_error_errno(desc, "putenv", errno);
+}
+
+
 int
 liberror_putenv(char *string)
 {

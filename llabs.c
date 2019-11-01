@@ -2,6 +2,16 @@
 #include "internal.h"
 
 
+void
+liberror_llabs_failed(long long int i)
+{
+	liberror_set_error_errno("The absolute value of largest negative integer "
+	                         "cannot be represented as a signed integer",
+	                         "llabs", EOVERFLOW);
+	(void) i;
+}
+
+
 long long int
 liberror_llabs(long long int i)
 {
@@ -11,9 +21,7 @@ liberror_llabs(long long int i)
 	if (i != LLONG_MIN)
 		return llabs(i);
 	liberror_save_backtrace(NULL);
-	liberror_set_error_errno("The absolute value of largest negative integer "
-	                         "cannot be represented as a signed integer",
-	                         "llabs", EOVERFLOW);
+	liberror_llabs(i);
 	return i;
 #endif
 }

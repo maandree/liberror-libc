@@ -2,19 +2,16 @@
 #include "internal.h"
 
 
-int
-liberror_pipe(int fds[2])
+void
+liberror_pipe_failed(int fds[2])
 {
 	const char *desc;
-	if (!fds) {
-		desc = "Output parameter is NULL";
-		goto error;
-	}
-	if (!pipe(fds))
-		return 0;
 	switch (errno) {
 	case EFAULT:
-		desc = "Output parameter is an invalid pointer";
+		if (!fds)
+			desc = "Output parameter is NULL";
+		else
+			desc = "Output parameter is an invalid pointer";
 		break;
 	case EMFILE:
 		desc = "The process have too many file descriptors open";
@@ -26,8 +23,17 @@ liberror_pipe(int fds[2])
 		desc = "";
 		break;
 	}
-error:
-	liberror_save_backtrace(NULL);
 	liberror_set_error_errno(desc, "pipe", errno);
+	(void) fds;
+}
+
+
+int
+liberror_pipe(int fds[2])
+{
+	if (!pipe(fds))
+		return 0;
+	liberror_save_backtrace(NULL);
+	liberror_pipe_failed(fds);
 	return -1;
 }
