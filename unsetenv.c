@@ -12,7 +12,7 @@ liberror_unsetenv_failed(const char *name)
 		desc = "Environment variable name is the empty string";
 	else if (errno == EINVAL)
 		desc = "Environment variable name contains the '=' character";
-	liberror_set_error_errno(desc, "setenv", errno);
+	liberror_set_error_errno(desc, "unsetenv", errno);
 }
 
 
