@@ -21,7 +21,7 @@ liberror_llabs(long long int i)
 	if (i != LLONG_MIN)
 		return llabs(i);
 	liberror_save_backtrace(NULL);
-	liberror_llabs(i);
+	liberror_llabs_failed(i);
 	return i;
 #endif
 }
