@@ -2,6 +2,27 @@
 #include "internal.h"
 
 
+void
+liberror_setenv_failed(const char *envname, const char *envval, int overwrite)
+{
+	const char *desc = "";
+	if (!envname) {
+		if (!envval)
+			desc = "Environment variable name and value are NULL";
+		else
+			desc = "Environment variable name is NULL";
+	} else if (!envval) {
+		desc = "Environment variable value is NULL";
+	} else if (!*envname) {
+		desc = "Environment variable name is the empty string";
+	} else if (errno == EINVAL) {
+		desc = "Environment variable name contains the '=' character";
+	}
+	liberror_set_error_errno(desc, "setenv", errno);
+	(void) overwrite;
+}
+
+
 int
 liberror_setenv(const char *envname, const char *envval, int overwrite)
 {

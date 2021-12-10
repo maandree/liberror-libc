@@ -65,6 +65,7 @@ _LIBERROR_WUR ssize_t liberror_send_require(int, const void *, size_t, int, size
 void liberror_send_failed(int, const void *, size_t, int, const char *);
 void liberror_send_short(int, const void *, size_t, int, size_t min, size_t max, ssize_t returned, const char *);
 _LIBERROR_WUR int liberror_setenv(const char *, const char *, int);
+void liberror_setenv_failed(const char *, const char *, int);
 _LIBERROR_WUR int liberror_shutdown(int, int, const char *);
 void liberror_shutdown_failed(int, int, const char *);
 _LIBERROR_WUR int liberror_sockatmark(int, const char *);
