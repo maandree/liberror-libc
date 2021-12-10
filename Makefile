@@ -21,9 +21,11 @@ OBJ =\
 	abs.o\
 	calloc.o\
 	chdir.o\
+	check_kernel_version.o\
 	imaxabs.o\
 	labs.o\
 	llabs.o\
+	lseek.o\
 	malloc.o\
 	pipe.o\
 	putenv.o\

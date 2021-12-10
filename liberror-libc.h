@@ -8,6 +8,11 @@
 
 
 #define LIBERROR_LIBC_ERRROR_SHORT_READ -1
+#define LIBERROR_LIBC_ERRROR_SHORT_SEEK -2
+
+
+typedef int64_t _liberror_off_t;
+typedef uint64_t _liberror_uoff_t;
 
 
 int liberror_abs(int);
@@ -23,6 +28,11 @@ long int liberror_labs(long int);
 void liberror_labs_failed(long int);
 long long int liberror_llabs(long long int);
 void liberror_llabs_failed(long long int);
+_liberror_off_t liberror_lseek(int, _liberror_off_t, int, const char *);
+_liberror_off_t liberror_lseek_require(int, _liberror_off_t, int, _liberror_uoff_t min, _liberror_uoff_t max, const char *);
+void liberror_lseek_failed(int, _liberror_off_t, int, const char *);
+void liberror_lseek_short(int, _liberror_off_t, int, _liberror_uoff_t min, _liberror_uoff_t max,
+                          _liberror_off_t returned, const char *);
 void *liberror_malloc(size_t);
 void liberror_malloc_failed(size_t);
 int liberror_pipe(int[2]);
