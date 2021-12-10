@@ -145,6 +145,30 @@ liberror_send_failed(int fd, const void *buf, size_t n, int flags, const char *f
 }
 
 
+void
+liberror_send_short(int fd, const void *buf, size_t n, int flags, size_t min, size_t max, ssize_t returned, const char *fname)
+{
+	const char *desc;
+	struct liberror_error *error;
+	int saved_errno = errno;
+	liberror_save_backtrace(NULL);
+	if (returned < 0 || (size_t)returned < min) {
+		desc = "Sent message was shorter than expected";
+	} else if (returned > max) {
+		desc = "Sent message was larger than expected";
+	} else {
+		desc = "Sent message was of an unexpected size";
+	}
+	liberror_set_error(desc, "send", "liberror-libc", LIBERROR_LIBC_ERRROR_SHORT_WRITE);
+	error = liberror_get_error();
+	error->details_type = LIBERROR_DETAILS_ONE_FILE;
+	error->details.one_file.fd = fd;
+	error->details.one_file.name = fname ? strdup(fname) : NULL;
+	error->details.one_file.role = "Socket file";
+	errno = saved_errno;
+}
+
+
 ssize_t
 liberror_send(int fd, const void *buf, size_t n, int flags, const char *fname)
 {
@@ -153,5 +177,20 @@ liberror_send(int fd, const void *buf, size_t n, int flags, const char *fname)
 		return r;
 	liberror_save_backtrace(NULL);
 	liberror_send_failed(fd, buf, n, flags, fname);
+	return -1;
+}
+
+
+ssize_t
+liberror_send_require(int fd, const void *buf, size_t n, int flags, size_t min, size_t max, const char *fname)
+{
+	ssize_t r = send(fd, buf, n, flags);
+	if (r >= 0 && (size_t)r >= min && (size_t)r <= max)
+		return r;
+	liberror_save_backtrace(NULL);
+	if (r < 0)
+		liberror_send_failed(fd, buf, n, flags, fname);
+	else
+		liberror_send_short(fd, buf, n, flags, min, max, r, fname);
 	return -1;
 }

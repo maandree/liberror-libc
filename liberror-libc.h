@@ -9,6 +9,7 @@
 
 #define LIBERROR_LIBC_ERRROR_SHORT_READ -1
 #define LIBERROR_LIBC_ERRROR_SHORT_SEEK -2
+#define LIBERROR_LIBC_ERRROR_SHORT_WRITE -3
 
 
 typedef int64_t _liberror_off_t;
@@ -49,7 +50,9 @@ void liberror_recv_failed(int, void *, size_t, int, const char *);
 void liberror_recv_short(int, void *, size_t, int, size_t min, size_t max, ssize_t returned, const char *);
 /* void *liberror_posix_memalign(void **, size_t, size_t); TODO */
 ssize_t liberror_send(int, const void *, size_t, int, const char *);
+ssize_t liberror_send_require(int, const void *, size_t, int, size_t min, size_t max, const char *);
 void liberror_send_failed(int, const void *, size_t, int, const char *);
+void liberror_send_short(int, const void *, size_t, int, size_t min, size_t max, ssize_t returned, const char *);
 int liberror_setenv(const char *, const char *, int);
 int liberror_shutdown(int, int, const char *);
 void liberror_shutdown_failed(int, int, const char *);
