@@ -37,6 +37,7 @@ OBJ =\
 	setenv.o\
 	shutdown.o\
 	sockatmark.o\
+	strdup.o\
 	unsetenv.o
 
 LOBJ = $(OBJ:.o=.lo)

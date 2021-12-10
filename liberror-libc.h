@@ -58,6 +58,8 @@ int liberror_shutdown(int, int, const char *);
 void liberror_shutdown_failed(int, int, const char *);
 int liberror_sockatmark(int, const char *);
 void liberror_sockatmark_failed(int, const char *);
+char *liberror_strdup(const char *);
+void liberror_strdup_failed(const char *);
 int liberror_unsetenv(const char *);
 void liberror_unsetenv_failed(const char *);
 
