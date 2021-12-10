@@ -23,4 +23,4 @@
 #define HIDDEN GCC_ATTRIBUTES(__visibility__("hidden"))
 
 
-HIDDEN void liberror_libc_set_error_one_file(const char[256], const char[64], const char *, int, const char *);
+HIDDEN void liberror_libc_set_error_one_file(const char *, const char *, const char *, int, const char *);

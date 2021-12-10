@@ -112,6 +112,30 @@ liberror_recv_failed(int fd, void *buf, size_t n, int flags, const char *fname)
 }
 
 
+void
+liberror_recv_short(int fd, void *buf, size_t n, int flags, size_t min, size_t max, ssize_t returned, const char *fname)
+{
+	const char *desc;
+	struct liberror_error *error;
+	int saved_errno = errno;
+	liberror_save_backtrace(NULL);
+	if (returned < 0 || (size_t)returned < min) {
+		desc = "Received message was shorter than expected";
+	} else if (returned > max) {
+		desc = "Received message was larger than expected";
+	} else {
+		desc = "Received message was of an unexpected size";
+	}
+	liberror_set_error(desc, "recv", "liberror-libc", LIBERROR_LIBC_ERRROR_SHORT_READ);
+	error = liberror_get_error();
+	error->details_type = LIBERROR_DETAILS_ONE_FILE;
+	error->details.one_file.fd = fd;
+	error->details.one_file.name = fname ? strdup(fname) : NULL;
+	error->details.one_file.role = "Socket file";
+	errno = saved_errno;
+}
+
+
 ssize_t
 liberror_recv(int fd, void *buf, size_t n, int flags, const char *fname)
 {
@@ -120,5 +144,20 @@ liberror_recv(int fd, void *buf, size_t n, int flags, const char *fname)
 		return r;
 	liberror_save_backtrace(NULL);
 	liberror_recv_failed(fd, buf, n, flags, fname);
+	return -1;
+}
+
+
+ssize_t
+liberror_recv_require(int fd, void *buf, size_t n, int flags, size_t min, size_t max, const char *fname)
+{
+	ssize_t r = recv(fd, buf, n, flags);
+	if (r >= min && r <= max)
+		return r;
+	liberror_save_backtrace(NULL);
+	if (r < 0)
+		liberror_recv_failed(fd, buf, n, flags, fname);
+	else
+		liberror_recv_short(fd, buf, n, flags, min, max, r, fname);
 	return -1;
 }

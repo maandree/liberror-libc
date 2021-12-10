@@ -3,7 +3,7 @@
 
 
 void
-liberror_libc_set_error_one_file(const char desc[256], const char source[64], const char *frole, int fd, const char *fname)
+liberror_libc_set_error_one_file(const char *desc, const char *source, const char *frole, int fd, const char *fname)
 {
 	struct liberror_error *error;
 	int saved_errno = errno;
