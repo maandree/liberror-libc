@@ -142,6 +142,9 @@ liberror_send_failed(int fd, const void *buf, size_t n, int flags, const char *f
 		break;
 	}
 	liberror_libc_set_error_one_file(desc, "send", "Socket file", fd, fname);
+	(void) buf;
+	(void) n;
+	(void) flags;
 }
 
 
@@ -154,7 +157,7 @@ liberror_send_short(int fd, const void *buf, size_t n, int flags, size_t min, si
 	liberror_save_backtrace(NULL);
 	if (returned < 0 || (size_t)returned < min) {
 		desc = "Sent message was shorter than expected";
-	} else if (returned > max) {
+	} else if ((size_t)returned > max) {
 		desc = "Sent message was larger than expected";
 	} else {
 		desc = "Sent message was of an unexpected size";
@@ -166,6 +169,9 @@ liberror_send_short(int fd, const void *buf, size_t n, int flags, size_t min, si
 	error->details.one_file.name = fname ? strdup(fname) : NULL;
 	error->details.one_file.role = "Socket file";
 	errno = saved_errno;
+	(void) buf;
+	(void) n;
+	(void) flags;
 }
 
 

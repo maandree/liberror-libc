@@ -15,6 +15,7 @@
 
 #define _LIBERROR_WUR _LIBERROR_GCC_ONLY(__attribute__((__warn_unused_result__)))
 #define _LIBERROR_MALLOC _LIBERROR_GCC_ONLY(__attribute__((__malloc__)))
+#define _LIBERROR_CONST _LIBERROR_GCC_ONLY(__attribute__((__const__)))
 
 
 #define LIBERROR_LIBC_ERRROR_SHORT_READ -1

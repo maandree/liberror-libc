@@ -77,9 +77,9 @@ liberror_lseek_short(int fd, _liberror_off_t offset, int whence, _liberror_uoff_
 	struct liberror_error *error;
 	int saved_errno = errno;
 	liberror_save_backtrace(NULL);
-	if (returned < 0 || (size_t)returned < min) {
+	if (returned < 0 || (_liberror_uoff_t)returned < min) {
 		desc = "Seek resulted in a new offset in an earlier position than expected";
-	} else if (returned > max) {
+	} else if ((_liberror_uoff_t)returned > max) {
 		desc = "Seek resulted in a new offset in an beyond the expectation";
 	} else {
 		desc = "Seek resulted in an unexpected new offset";
@@ -91,6 +91,8 @@ liberror_lseek_short(int fd, _liberror_off_t offset, int whence, _liberror_uoff_
 	error->details.one_file.name = fname ? strdup(fname) : NULL;
 	error->details.one_file.role = "Seekable file";
 	errno = saved_errno;
+	(void) offset;
+	(void) whence;
 }
 
 

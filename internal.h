@@ -17,6 +17,7 @@
 
 
 #if defined(__GNUC__)
+# pragma GCC diagnostic ignored "-Wsuggest-attribute=const"
 # define GCC_ATTRIBUTES(...) __attribute__((__VA_ARGS__))
 #else
 # define GCC_ATTRIBUTES(...)

@@ -30,6 +30,7 @@ liberror_shutdown_failed(int fd, int how, const char *fname)
 		break;
 	}
 	liberror_libc_set_error_one_file(desc, "shutdown", "Socket file", fd, fname);
+	(void) how;
 }
 
 
