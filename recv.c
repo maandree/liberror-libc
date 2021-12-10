@@ -152,7 +152,7 @@ ssize_t
 liberror_recv_require(int fd, void *buf, size_t n, int flags, size_t min, size_t max, const char *fname)
 {
 	ssize_t r = recv(fd, buf, n, flags);
-	if (r >= min && r <= max)
+	if (r >= 0 && (size_t)r >= min && (size_t)r <= max)
 		return r;
 	liberror_save_backtrace(NULL);
 	if (r < 0)
